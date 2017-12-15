@@ -1,6 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View , Image, FlatList, SectionList} from 'react-native';
-
+import Icon from  'react-native-vector-icons/FontAwesome';
+const iconComment =(<Icon name="comment" size={18} color="rgb(159, 159, 159)"/>);
+const iconAdult = (<Icon name="user" size={18} color="rgb(159, 159, 159)"/>);
+const iconPlus = (<Icon name="plus" size={18} color="rgb(159, 159, 159)"/>);
 
 class MainApp extends React.Component {
     constructor(props){
@@ -68,10 +71,17 @@ class MainApp extends React.Component {
                             source = {{uri:'https://b.thumbs.redditmedia.com/gdvgJFh_clO5so1S4Hq8AXjGP-skzMEEu6zD47MWx2o.jpg'}}
                             resizeMode='contain'
                               />
-                        <Text>comments</Text>
+                          <Text>{iconComment}21888</Text>
                     </View>
                     <View style={item.content}>
-                        <View style={item.title}>Przykladowy tytul</View>
+                        <View style={item.titleBox}>
+                            <Text style={item.title}>Przykladowy tytul o kaczkch bocianach rysiach kunach i jeleniach</Text>
+                            <View style={item.footer}>
+                                <Text>{iconAdult} Jeremy</Text>
+                                <Text>{iconPlus}1450</Text>
+
+                            </View>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -83,31 +93,41 @@ const item = StyleSheet.create({
     container:{
         width: 'auto',
         height:110,
-        borderWidth:1,
-        borderColor: 'black',
+        borderBottomWidth:0.5,
+        borderTopWidth:0.5,
+        borderColor: 'rgb(159, 159, 159)',
         flexDirection:'row'
     },
     imageBox:{
         height:110,
         width:90,
-        borderWidth:1,
+        // borderWidth:1,
         borderColor:'black'
     },
     content:{
         flex:1,
         height:110,
-        borderWidth:1,
+        // borderWidth:1,
         borderColor:'red'
     },
+    titleBox:{
+        justifyContent:'space-between',
+        flex:1
+    },
     title:{
-
+        fontSize:16,
+        fontWeight:'bold'
+    },
+    footer:{
+        flexDirection:'row',
+        justifyContent:'space-between'
     }
 })
 
 const styles = StyleSheet.create({
 
     headerText :{
-        fontSize:42
+        fontSize:24
     },
 
     sectionHeader: {
