@@ -11,6 +11,12 @@ class MainApp extends React.Component {
             isData: true
         }
     }
+
+    refresh = () =>{
+        this.setState(
+            this.state
+        )
+    }
     componentDidMount(){
         fetch('https://www.reddit.com/.json')
         .then(response =>response.json())
@@ -62,6 +68,7 @@ class MainApp extends React.Component {
     }
 
     render(){
+        
         let data;
         if (this.state.isData === true){
             data = this.state.allTopics.map( (elem,index)=>{
@@ -71,7 +78,7 @@ class MainApp extends React.Component {
             })
 
         } else {
-            data = <Error />
+            data = <Error refresh={this.refresh}/>
         }
         return (
             <View>
