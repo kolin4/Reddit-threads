@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View , Image, FlatList, SectionList, TouchableWithoutFeedback, Linking} from 'react-native';
+import { StyleSheet, Text, View , Image, TouchableWithoutFeedback, Linking} from 'react-native';
 import Icon from  'react-native-vector-icons/FontAwesome';
 const iconComment =(<Icon name="comment" size={18} color="rgb(159, 159, 159)"/>);
 const iconAdult = (<Icon name="user" size={18} color="rgb(159, 159, 159)"/>);
@@ -8,7 +8,6 @@ const iconPlus = (<Icon name="plus" size={18} color="rgb(159, 159, 159)"/>);
 
 class SinglePost extends React.Component {
     press = () =>{
-        console.log(this.props.link);
         Linking.openURL(this.props.link).catch(err => console.error('An error occurred', err));
     }
     render(){
@@ -50,18 +49,17 @@ const item = StyleSheet.create({
         borderBottomWidth:0.5,
         borderTopWidth:0.5,
         borderColor: 'rgb(159, 159, 159)',
-        flexDirection:'row'
+        flexDirection:'row',
+        marginBottom : 10
     },
     imageBox:{
         height:110,
         width:90,
-        // borderWidth:1,
         borderColor:'black'
     },
     content:{
         flex:1,
         height:110,
-        // borderWidth:1,
         borderColor:'red'
     },
     titleBox:{

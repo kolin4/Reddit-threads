@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View , Image, FlatList, SectionList, ScrollView} from 'react-native';
-
+import { StyleSheet, Text, View , Image, ScrollView, AsyncStorage} from 'react-native';
+import Error from './error';
 import SinglePost from './singlePost';
 
 class MainApp extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            allTopics:[]
+            allTopics:[],
+            isData: true
         }
     }
     componentDidMount(){
@@ -31,38 +32,58 @@ class MainApp extends React.Component {
                 topic.push(singleTopic);
 
             }
+            AsyncStorage.setItem('data', JSON.stringify(topic));
             this.setState({
                 allTopics:topic
             })
 
         })
         .catch( (error) =>{
-                console.log(error);
-        })
+                try {
+                    AsyncStorage.getItem('data')
+                    .then(value => {
 
+                        if ( value !== null){
+                            this.setState({
+                                allTopics:JSON.parse(value)
+                            })
+                        } else {
+                            this.setState({
+                                isData:false
+                            })
+                        }
+                    })
+                } catch (error){
+                    this.setState({
+                        isData:false
+                    })
+                }
+        })
     }
 
     render(){
-        console.log(this.state.allTopics);
-        const data = this.state.allTopics.map( (elem,index)=>{
-            return (
-                <SinglePost link={elem.link}  key={index} title={elem.title} author={elem.author} imageSrc={elem.imageSrc} score={elem.score} comments={elem.comments}/>
-            )
-        })
+        let data;
+        if (this.state.isData === true){
+            data = this.state.allTopics.map( (elem,index)=>{
+                return (
+                    <SinglePost link={elem.link}  key={index} title={elem.title} author={elem.author} imageSrc={elem.imageSrc} score={elem.score} comments={elem.comments}/>
+                )
+            })
+
+        } else {
+            data = <Error />
+        }
         return (
             <View>
-                <View style={{height:70, borderWidth:1,borderColor:'black' }}>
+                <View style={styles.logo}>
                     <Image
                         style={{width:null, height:null,flex:1}}
                         source = {require('../images/redditLogo.png')}
                         resizeMode='contain'
                           />
                 </View>
-                <View style={{alignItems:'center'}}>
-                    <Text  style={styles.headerText}>Latest Threads</Text>
 
-                </View>
-                <ScrollView>
+                <ScrollView style={{marginBottom:75, paddingTop:10}}>
                     {data}
 
                 </ScrollView>
@@ -73,8 +94,17 @@ class MainApp extends React.Component {
 
 
 const styles = StyleSheet.create({
+    logo :{
+        shadowOffset:{
+            width: 10,
+            height: 10,
+        },
+        shadowColor: 'red',
+        height:70,
 
+    },
     headerText :{
+        marginTop:10,
         fontSize:24
     },
 
