@@ -7,4 +7,4 @@ expo link : https://expo.io/@kolin4/Reddit
 
 standalone apk :  https://exp-shell-app-assets.s3-us-west-1.amazonaws.com/android%2F%40kolin4%2FReddit-6e60e070-e343-11e7-a4f9-0a580a780604-signed.apk
 
-![alt text](http://i64.tinypic.com/21jpyf7.png)
+![alt text](http://i66.tinypic.com/2qust1x.png)
