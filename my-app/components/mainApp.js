@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View , Image, ScrollView, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View , Image, ScrollView, AsyncStorage, TouchableWithoutFeedback} from 'react-native';
 import Error from './error';
 import SinglePost from './singlePost';
 
@@ -11,13 +11,14 @@ class MainApp extends React.Component {
             isData: true
         }
     }
-
     refresh = () =>{
-        this.setState(
-            this.state
-        )
+        this.pushingData();
     }
     componentDidMount(){
+        this.pushingData();
+
+    }
+    pushingData = () =>{
         fetch('https://www.reddit.com/.json')
         .then(response =>response.json())
         .then(responseJSON => {
@@ -40,7 +41,9 @@ class MainApp extends React.Component {
             }
             AsyncStorage.setItem('data', JSON.stringify(topic));
             this.setState({
-                allTopics:topic
+                allTopics:topic,
+                isData:true
+
             })
 
         })
@@ -68,7 +71,6 @@ class MainApp extends React.Component {
     }
 
     render(){
-        
         let data;
         if (this.state.isData === true){
             data = this.state.allTopics.map( (elem,index)=>{
@@ -82,14 +84,16 @@ class MainApp extends React.Component {
         }
         return (
             <View>
-                <View style={styles.logo}>
-                    <Image
-                        style={{width:null, height:null,flex:1}}
-                        source = {require('../images/redditLogo.png')}
-                        resizeMode='contain'
-                          />
-                </View>
+                <TouchableWithoutFeedback onPress={this.refresh}>
+                    <View style={styles.logo}>
+                        <Image
+                            style={{width:null, height:null,flex:1}}
+                            source = {require('../images/redditLogo.png')}
+                            resizeMode='contain'
 
+                              />
+                    </View>
+                </TouchableWithoutFeedback>
                 <ScrollView style={{marginBottom:75, paddingTop:10}}>
                     {data}
 

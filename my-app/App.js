@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MainApp from './components/mainApp';
 
-import Header from './components/header';
 
 export default class App extends React.Component {
 
